@@ -92,13 +92,18 @@ c --- Compute freezing temperatures of sea water
 c
       if (ditflx.or.disflx) nflxdi(k)=nflxdi(k)+1
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,tice_f,fwflx,sstc,
 c$OMP+ rice,trxflx,sssc,srxflx
-#ifdef TRC
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,tice_f,fwflx,sstc,
+c$OMP+ rice,trxflx,sssc,srxflx
+c$OMP+ )
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
