@@ -344,19 +344,33 @@ c$OMP PARALLEL DO PRIVATE(l,i,kfpl,klpl,k,kn,q,tup)
       enddo
 c$OMP END PARALLEL DO
 c
+#if defined(TRC) && defined(TKE)
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,kfpl,klpl,k,kn,du2,msku,q,tup,pup,sup,cr,plo,tlo,slo,bcrrd,
 c$OMP+ afeql,bvfbot,dps,drho,bvfsq,bvf,rig,egrs,egr,egrup,egrlo,dfints,
 c$OMP+ rhisc,els,urmse,cpse,umnsc,esfac,dfddsu,dfddsl,nub,nus,ust,vsf,
 c$OMP+ nut,nuls,nusm,mols,h,sg,zeta,phis,ws
-#if defined(TRC) && defined(TKE)
 c$OMP+ ,gls_c3,tke_epsilon,tke_prod,tke_buoy,tke_Q,Ls_unlmt,Ls_lmt,Gh,
 c$OMP+ Gm,cff,Sm,Sh,ql
-# ifdef GLS
-c$OMP+ ,gls_prod,gls_buoy,gls_diss,gls_Q
-# endif
-#endif
 c$OMP+ )
+#elif defined(TRC) && defined(TKE) && defined(GLS)
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,kfpl,klpl,k,kn,du2,msku,q,tup,pup,sup,cr,plo,tlo,slo,bcrrd,
+c$OMP+ afeql,bvfbot,dps,drho,bvfsq,bvf,rig,egrs,egr,egrup,egrlo,dfints,
+c$OMP+ rhisc,els,urmse,cpse,umnsc,esfac,dfddsu,dfddsl,nub,nus,ust,vsf,
+c$OMP+ nut,nuls,nusm,mols,h,sg,zeta,phis,ws
+c$OMP+ ,gls_c3,tke_epsilon,tke_prod,tke_buoy,tke_Q,Ls_unlmt,Ls_lmt,Gh,
+c$OMP+ Gm,cff,Sm,Sh,ql
+c$OMP+ ,gls_prod,gls_buoy,gls_diss,gls_Q
+c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,kfpl,klpl,k,kn,du2,msku,q,tup,pup,sup,cr,plo,tlo,slo,bcrrd,
+c$OMP+ afeql,bvfbot,dps,drho,bvfsq,bvf,rig,egrs,egr,egrup,egrlo,dfints,
+c$OMP+ rhisc,els,urmse,cpse,umnsc,esfac,dfddsu,dfddsl,nub,nus,ust,vsf,
+c$OMP+ nut,nuls,nusm,mols,h,sg,zeta,phis,ws
+c$OMP+ )
+#endif
       do j=1,jj
 c
 c ----- Compute squared vertical velocity gradients of u-component
