@@ -285,6 +285,7 @@ c
         call xctilr(v(1-nbdy,1-nbdy,k1n), 1,kk, 1,1, halo_vv)
       endif
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,pres,k,kn,ttem,ssal,delp,dens,densr,q,tmxl,smxl,alfa,beta,
 c$OMP+ bfltot,bflpsw,pmxl,lui,lbi,lei,cus,cni,cbftot,cbfpsw,crs,rm1,rm2,
@@ -293,10 +294,19 @@ c$OMP+ sfsl,dpt,kmax,kfmax,bpmldp,pup,drhup,plo,drhlo,pbrnd,bcwsum,
 c$OMP+ bdpsum,tup,sup,dup,dsgdt,dsgds,bc,bpc,pswbas,pswup,pswlo,ttmp,
 c$OMP+ stmp,sigtmp,sigfsl,dps,tdps,sdps,tmxl0,smxl0,um,vm,dpe0,dke0,
 c$OMP+ tkeu,uk,vk,dpe,dke,tkel,chngd
-#ifdef TRC
 c$OMP+ ,nt,ttrc,trfsl,trdps
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,pres,k,kn,ttem,ssal,delp,dens,densr,q,tmxl,smxl,alfa,beta,
+c$OMP+ bfltot,bflpsw,pmxl,lui,lbi,lei,cus,cni,cbftot,cbfpsw,crs,rm1,rm2,
+c$OMP+ rm3,rm4,tkew,pradd,kfpl,dpmxl,tkeo,nitr,dtke,dpfsl,dptopl,tfsl,
+c$OMP+ sfsl,dpt,kmax,kfmax,bpmldp,pup,drhup,plo,drhlo,pbrnd,bcwsum,
+c$OMP+ bdpsum,tup,sup,dup,dsgdt,dsgds,bc,bpc,pswbas,pswup,pswlo,ttmp,
+c$OMP+ stmp,sigtmp,sigfsl,dps,tdps,sdps,tmxl0,smxl0,um,vm,dpe0,dke0,
+c$OMP+ tkeu,uk,vk,dpe,dke,tkel,chngd
+c$OMP+ )
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
