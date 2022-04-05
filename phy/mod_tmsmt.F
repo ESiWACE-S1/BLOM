@@ -177,11 +177,14 @@ c
 c
       integer i,j,k,l,kn
 c
-c$OMP PARALLEL DO PRIVATE(k,kn,l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(k,kn,l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(k,kn,l,i
+c$OMP+ )
+#endif
       do j=1,jj
         do k=1,kk
           kn=k+nn
@@ -254,12 +257,16 @@ c
       integer nt
 #endif
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,pbfaco,pbfacn,k,kn,km,kp,pold,pmid,pnew,q
-#ifdef TRC
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,pbfaco,pbfacn,k,kn,km,kp,pold,pmid,pnew,q
+c$OMP+ )
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
