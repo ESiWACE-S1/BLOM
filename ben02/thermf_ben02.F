@@ -117,15 +117,22 @@ c --- Time level for diagnosing heat and salt relaxation fluxes
 c
       if (ditflx.or.disflx) nflxdi(k)=nflxdi(k)+1
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,tice_f,hice_min,
 c$OMP+ fice,hice,hsnw,tsrf,fice0,hice0,hsnw0,qsww,qnsw,tice,albi,tsmlt,
 c$OMP+ albi_h,qswi,dh,qsnwf,fcond,qdamp,qsmlt,qo2i,qbot,swfac,dtml,q,
 c$OMP+ volice,df,dvi,dvs,fwflx,sstc,rice,trxflx,sssc,srxflx
-#ifdef TRC
 c$OMP+ ,nt
-#endif
 c$OMP+ ) SHARED(xmi,y)
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,tice_f,hice_min,
+c$OMP+ fice,hice,hsnw,tsrf,fice0,hice0,hsnw0,qsww,qnsw,tice,albi,tsmlt,
+c$OMP+ albi_h,qswi,dh,qsnwf,fcond,qdamp,qsmlt,qo2i,qbot,swfac,dtml,q,
+c$OMP+ volice,df,dvi,dvs,fwflx,sstc,rice,trxflx,sssc,srxflx
+c$OMP+ ) SHARED(xmi,y)
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
