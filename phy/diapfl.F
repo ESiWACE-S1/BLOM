@@ -88,16 +88,24 @@ c
 c --- Constant in the diffusion equation
       c=g*g*delt1/(alpha0*alpha0)
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,k,kn,ttem,ssal,delp,dens,sigr,nu,rstdns,ttem0,ssal0,delp0,
 c$OMP+ dens0,sigr0,nu0,kfpl,kmin,kmax,pres,fpu,fpl,delpu,delpl,nubbl,
 c$OMP+ dsgli,fcl,dsgdt,dsgds,dsgu,dsgl,dsghm,dsg,dsgui,fcmx,dsgc,q,fcu,
 c$OMP+ fmax,done,niter,kfmaxu,f0,f,gtd,dflim,fold,h,dwnwrd,ctd,bitd,
 c$OMP+ remfmx,r,t,s,dfdg,atd,maxdf,dtd
-#ifdef TRC
 c$OMP+ ,nt,ttrc
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,k,kn,ttem,ssal,delp,dens,sigr,nu,rstdns,ttem0,ssal0,delp0,
+c$OMP+ dens0,sigr0,nu0,kfpl,kmin,kmax,pres,fpu,fpl,delpu,delpl,nubbl,
+c$OMP+ dsgli,fcl,dsgdt,dsgds,dsgu,dsgl,dsghm,dsg,dsgui,fcmx,dsgc,q,fcu,
+c$OMP+ fmax,done,niter,kfmaxu,f0,f,gtd,dflim,fold,h,dwnwrd,ctd,bitd,
+c$OMP+ remfmx,r,t,s,dfdg,atd,maxdf,dtd
+c$OMP+ )
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
