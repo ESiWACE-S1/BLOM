@@ -65,11 +65,14 @@ c
         kn=k+nn
         km=k+mm
 c
-c$OMP PARALLEL DO PRIVATE(l,i,q
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i,q
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i,q
+c$OMP+ )
+#endif
         do j=0,jj+1
           do l=1,isu(j)
           do i=max(0,ifu(j,l)),min(ii+2,ilu(j,l))
@@ -92,11 +95,13 @@ c$OMP+ )
           enddo
         enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i,q
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i,q
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i,q)
+#endif
         do j=0,jj+2
           do l=1,isv(j)
           do i=max(0,ifv(j,l)),min(ii+1,ilv(j,l))
@@ -119,11 +124,13 @@ c$OMP+ )
           enddo
         enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i,q
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i,q
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i,q)
+#endif
         do j=0,jj+1
           do l=1,isp(j)
           do i=max(0,ifp(j,l)),min(ii+1,ilp(j,l))

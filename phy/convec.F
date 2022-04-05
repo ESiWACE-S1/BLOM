@@ -52,13 +52,18 @@ c
 c
       integer niter
 c
+#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(
 c$OMP+ l,i,k,kn,ttem,ssal,delp,dens,densr,dps,kfpl,kfplo,tdps,sdps,q,
 c$OMP+ ttmp,stmp,dtmp,done,niter,kmix
-#ifdef TRC
 c$OMP+ ,nt,ttrc,trdps
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+ l,i,k,kn,ttem,ssal,delp,dens,densr,dps,kfpl,kfplo,tdps,sdps,q,
+c$OMP+ ttmp,stmp,dtmp,done,niter,kmix
+c$OMP+ )
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
