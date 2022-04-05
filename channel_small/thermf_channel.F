@@ -107,13 +107,18 @@
 !
       if (ditflx.or.disflx) nflxdi(k)=nflxdi(k)+1
 !
+#ifdef TRC
 !$OMP PARALLEL DO PRIVATE(
 !$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,fwflx,sstc,rice,
 !$OMP+ trxflx,sssc,srxflx
-#ifdef TRC
 !$OMP+ ,nt
-#endif
 !$OMP+ ) SHARED(xmi,y)
+#else
+!$OMP PARALLEL DO PRIVATE(
+!$OMP+ l,i,dpotl,hotl,totl,sotl,dpmxl,hmxl,tmxl,smxl,fwflx,sstc,rice,
+!$OMP+ trxflx,sssc,srxflx
+!$OMP+ ) SHARED(xmi,y)
+#endif
       do j=1,jj
         do l=1,isp(j)
         do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
