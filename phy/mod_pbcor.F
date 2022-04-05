@@ -164,11 +164,13 @@ c
         kn=k+nn
 c
         if     (bmcmth.eq.'uc') then
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj
             do l=1,isu(j)
             do i=max(1,ifu(j,l)),min(ii+1,ilu(j,l))
@@ -204,11 +206,13 @@ c$OMP+ )
             enddo
           enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj+1
             do l=1,isv(j)
             do i=max(1,ifv(j,l)),min(ii,ilv(j,l))
@@ -245,11 +249,13 @@ c$OMP+ )
           enddo
 c$OMP END PARALLEL DO
         elseif (bmcmth.eq.'dluc') then
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj
             do l=1,isu(j)
             do i=max(1,ifu(j,l)),min(ii+1,ilu(j,l))
@@ -291,11 +297,13 @@ c$OMP+ )
             enddo
           enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj+1
             do l=1,isv(j)
             do i=max(1,ifv(j,l)),min(ii,ilv(j,l))
@@ -345,11 +353,13 @@ c$OMP END PARALLEL DO
                  stop '(pbcor1)'
         endif
 c
-c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni)
+#endif
         do j=1,jj
           do l=1,isp(j)
           do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
@@ -537,11 +547,13 @@ c
         km=k+mm
 c
         if     (bmcmth.eq.'uc') then
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj
             do l=1,isu(j)
             do i=max(1,ifu(j,l)),min(ii+1,ilu(j,l))
@@ -571,11 +583,13 @@ c$OMP+ )
             enddo
           enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj+1
             do l=1,isv(j)
             do i=max(1,ifv(j,l)),min(ii,ilv(j,l))
@@ -606,11 +620,13 @@ c$OMP+ )
           enddo
 c$OMP END PARALLEL DO
         elseif (bmcmth.eq.'dluc') then
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj
             do l=1,isu(j)
             do i=max(1,ifu(j,l)),min(ii+1,ilu(j,l))
@@ -646,11 +662,13 @@ c$OMP+ )
             enddo
           enddo
 c$OMP END PARALLEL DO
-c$OMP PARALLEL DO PRIVATE(l,i
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i)
+#endif
           do j=1,jj+1
             do l=1,isv(j)
             do i=max(1,ifv(j,l)),min(ii,ilv(j,l))
@@ -693,11 +711,14 @@ c$OMP+ )
                  stop '(pbcor2)'
         endif
 c
-c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni
 #ifdef TRC
+c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni
 c$OMP+ ,nt
-#endif
 c$OMP+ )
+#else
+c$OMP PARALLEL DO PRIVATE(l,i,dpo,dpni
+c$OMP+ )
+#endif
         do j=1,jj
           do l=1,isp(j)
           do i=max(1,ifp(j,l)),min(ii,ilp(j,l))
