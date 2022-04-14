@@ -287,6 +287,18 @@ c ---   east boundary is all land.
         enddo
       endif
 c
+#ifdef ATOS_DEBUG_MASKS
+      do j=1-nbdy,jdm+nbdy
+        write(*,'(2i3,a$)') j, 1, ': '
+        do i=1-nbdy,idm+nbdy
+           write(*,'(4(i1,a)$)') ip(i,j), ",", iq(i,j), ",", iu(i,j)
+     .      , ",", iv(i,j), "|"
+        enddo
+        write(*,'(x)')
+      enddo
+      call xchalt('(DEBUG)')
+      stop '(DEBUG)'
+#endif
 c --- determine loop bounds for vorticity points, including interior and
 c --- promontory points
       call indxi(iq,ifq,ilq,isq)
