@@ -65,14 +65,13 @@ c
         kn=k+nn
         km=k+mm
 c
+c$OMP PARALLEL DO default(none) PRIVATE(l,i,q,j)
 #ifdef TRC
-c$OMP PARALLEL DO PRIVATE(l,i,q
-c$OMP+ ,nt
-c$OMP+ )
-#else
-c$OMP PARALLEL DO PRIVATE(l,i,q
-c$OMP+ )
+c$OMP+ PRIVATE(nt) shared(uflxtr,trc,ntr)
 #endif
+c$OMP+ shared(jj,isu,ifu,ilu,ii,delt1,difiso,scuy,scuxi,k)
+c$OMP+ shared(dp,kn,usflld,utflld,saln,temp,usflx,utflx,km)
+
         do j=0,jj+1
           do l=1,isu(j)
           do i=max(0,ifu(j,l)),min(ii+2,ilu(j,l))
@@ -95,13 +94,12 @@ c$OMP+ )
           enddo
         enddo
 c$OMP END PARALLEL DO
+c$OMP PARALLEL DO default(none) PRIVATE(l,i,q,j)
 #ifdef TRC
-c$OMP PARALLEL DO PRIVATE(l,i,q
-c$OMP+ ,nt
-c$OMP+ )
-#else
-c$OMP PARALLEL DO PRIVATE(l,i,q)
+c$OMP+ PRIVATE(nt) shared(vflxtr,trc,ntr)
 #endif
+c$OMP+ shared(jj,isv,ifv,ilv,ii,delt1,difiso,scvx,scvyi,k)
+c$OMP+ shared(dp,kn,vsflld,vtflld,saln,temp,vsflx,vtflx,km)
         do j=0,jj+2
           do l=1,isv(j)
           do i=max(0,ifv(j,l)),min(ii+1,ilv(j,l))
@@ -124,13 +122,11 @@ c$OMP PARALLEL DO PRIVATE(l,i,q)
           enddo
         enddo
 c$OMP END PARALLEL DO
-#ifdef TRC
 c$OMP PARALLEL DO PRIVATE(l,i,q
+#ifdef TRC
 c$OMP+ ,nt
-c$OMP+ )
-#else
-c$OMP PARALLEL DO PRIVATE(l,i,q)
 #endif
+c$OMP+ )
         do j=0,jj+1
           do l=1,isp(j)
           do i=max(0,ifp(j,l)),min(ii+1,ilp(j,l))

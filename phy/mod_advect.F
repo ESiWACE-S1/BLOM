@@ -66,8 +66,10 @@ c
       integer nt
 #endif
 c
-c$OMP PARALLEL DO PRIVATE(
+
+c$OMP PARALLEL DO default(none) PRIVATE(j,
 c$OMP+  l,i,iw,ie,js,jn,isw,jsw,ise,jse,inw,jnw,ine,jne)
+c$OMP+ shared(iu,iv,ip,p,pbmin,ii,jj,isp,ilp,ifp)
       do j=-1,jj+2
         do l=1,isp(j)
         do i=max(-1,ifp(j,l)),min(ii+2,ilp(j,l))
@@ -106,8 +108,16 @@ c
 #endif
 c
       if     (rmpmth.eq.'eitvel') then
-c$OMP PARALLEL DO PRIVATE(km,kn,j,l,i)
-c$OMP+FIRSTPRIVATE(utotm,vtotm)
+c$OMP  PARALLEL DO default(none) PRIVATE(km,kn,j,l,i,k)
+c$OMP+ FIRSTPRIVATE(utotm,vtotm)
+c$OMP+ shared(isu,ifu,ilu,u,ubflxs_p,ii,mm,nn,jj,dlt,pbu)
+c$OMP+ shared(umfltd,dpu,delt1,scuy,umax,isv,ifv,ilv)
+c$OMP+ shared(v,vbflxs_p,pbv,vmfltd,dpv,scvx,vmax,scp2i,scp2)
+c$OMP+ shared(pbmin,p,uflx,vflx,utflx,vtflx,usflx,vsflx)
+c$OMP+ shared(temp,saln,dp,m,n)
+#ifdef TRC
+c$OMP+ shared(trc)
+#endif
         do k=1,kk
           km=k+mm
           kn=k+nn
