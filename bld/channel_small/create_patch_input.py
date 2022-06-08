@@ -27,10 +27,10 @@
 # MODIFY THE FOLLOWING PARAMETERS AS DESIRED
 import sys
 
-idm = sys.argv[1] #64
-jdm = sys.argv[2] #128
-ibig = sys.argv[3] #8
-jbig = sys.argv[4] #8
+idm  = int(sys.argv[1]) #64
+jdm  = int(sys.argv[2]) #128
+ibig = int(sys.argv[3]) #8
+jbig = int(sys.argv[4]) #8
 nreg = 1
 ##################################################
 #
@@ -38,7 +38,7 @@ npe = idm//ibig
 mpe = jdm//jbig
 npes = npe*mpe
 # OUTPUT PATCH FILENAME
-fout = open('patch.input.'+str(npes)+'_python','w')
+fout = open('patch.input.'+str(npes),'w')
 #
 minsea = ibig*jbig-ibig
 maxsea = ibig*jbig
