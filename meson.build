@@ -9,6 +9,7 @@ fcc = meson.get_compiler('fortran')
 if fcc.get_id() == 'gcc'
   add_project_arguments(['-g' ], language: 'fortran')
   add_project_arguments(['-fdefault-real-8', '-fconvert=big-endian'],
+                         '-ffixed-line-length-none',
                         language: 'fortran')
   if get_option('buildtype').startswith('debug')
     add_project_arguments(['-fbacktrace', '-fcheck=all', '-finit-real=snan',
@@ -23,8 +24,8 @@ if fcc.get_id() == 'gcc'
   endif
 elif fcc.get_id() == 'intel'
   add_project_arguments(['-g' ], language: 'fortran')
-  add_project_arguments(['-r8', '-convert', 'big_endian', '-assume',
-                         'byterecl'], language: 'fortran')
+  add_project_arguments(['-r8', '-convert', 'big_endian', '-assume', 'byterecl',
+                         '-extend-source'], language: 'fortran')
   if get_option('buildtype').startswith('debug')
     add_project_arguments(['-traceback', '-check all'.split(),
                            '-init=snan,arrays', '-fpe0','-ftrapuv'],
