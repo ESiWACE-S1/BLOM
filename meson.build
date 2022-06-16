@@ -137,6 +137,10 @@ if get_option('parallel_netcdf')
   endif
 endif
 
+foreach opt_flag : get_option('optims')
+  add_project_arguments('-D@0@_OPTIM'.format(opt_flag.to_upper()), language: 'fortran')
+endforeach
+
 # Handle Unit Testing
 subdir('tests')
 
