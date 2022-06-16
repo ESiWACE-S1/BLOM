@@ -74,6 +74,7 @@ c$OMP parallel do
 c$OMP+ default(none)
 c$OMP+ private(i,j,p_,iw,ie,js,jn)
 c$OMP+ shared(ii,jj,iu,iv,ip,p,pbmin)
+c$OMP+ collapse(2)
       do j=2-nbdy,jj+nbdy-1
          do i=2-nbdy,ii+nbdy-1
             p_ = huge(1.0)
