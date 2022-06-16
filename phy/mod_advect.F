@@ -65,8 +65,45 @@ c
 #ifdef TRC
       integer nt
 #endif
-c
+#ifdef OPT1_OPTIM
+      real :: p_
+#endif
 
+#ifdef OPT1_OPTIM
+c$OMP parallel do
+c$OMP+ default(none)
+c$OMP+ private(i,j,p_,iw,ie,js,jn)
+c$OMP+ shared(ii,jj,iu,iv,ip,p,pbmin)
+      do j=2-nbdy,jj+nbdy-1
+         do i=2-nbdy,ii+nbdy-1
+            p_ = huge(1.0)
+            iw=iu(i  ,j)
+            ie=iu(i+1,j)
+            js=iv(i,j  )
+            jn=iv(i,j+1)
+            !     iw defined
+            if(iw /= 0) then
+               if(js /= 0 .and. ip(i-1,j-1) /= 0) p_ = min(p_, p(i-1,j-1, kk+1))
+               if(              ip(i-1,j  ) /= 0) p_ = min(p_, p(i-1,j  , kk+1))
+               if(jn /= 0 .and. ip(i-1,j+1) /= 0) p_ = min(p_, p(i-1,j+1, kk+1))
+            end if
+
+            if(js /= 0 .and. ip(i  ,j-1) /= 0) p_ = min(p_, p(i  ,j-1, kk+1))
+            p_ = min(p_, p(i  ,j  , kk+1))
+            if(jn /= 0 .and. ip(i  ,j+1) /= 0) p_ = min(p_, p(i  ,j+1, kk+1))
+
+            !     ie defined
+            if(ie /= 0) then
+               if(js /= 0 .and. ip(i+1,j-1) /= 0) p_ = min(p_, p(i+1,j-1, kk+1))
+               if(              ip(i+1,j  ) /= 0) p_ = min(p_, p(i+1,j  , kk+1))
+               if(jn /= 0 .and. ip(i+1,j+1) /= 0) p_ = min(p_, p(i+1,j+1, kk+1))
+            end if
+
+            pbmin(i,j) = p_
+         enddo
+      enddo
+c$OMP end parallel do
+#else
 c$OMP PARALLEL DO default(none) PRIVATE(j,
 c$OMP+  l,i,iw,ie,js,jn,isw,jsw,ise,jse,inw,jnw,ine,jne)
 c$OMP+ shared(iu,iv,ip,p,pbmin,ii,jj,isp,ilp,ifp)
@@ -93,7 +130,8 @@ c$OMP+ shared(iu,iv,ip,p,pbmin,ii,jj,isp,ilp,ifp)
         enddo
       enddo
 c$OMP END PARALLEL DO
-c
+
+#endif
       call xctilr(ubflxs_p, 1,2, 2,2, halo_uv)
       call xctilr(vbflxs_p, 1,2, 2,2, halo_vv)
       call xctilr(pbu, 1,2, 2,2, halo_us)
