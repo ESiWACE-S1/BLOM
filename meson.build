@@ -35,7 +35,7 @@ elif fcc.get_id() == 'intel'
     add_project_arguments('-fp-model precise'.split(),language: 'fortran')
   endif
   if 'opt2' in get_option('optims')
-    add_project_arguments('-march=core-avx2 -no-prec-div -unroll-aggressive -qopt-prefetch'.split(), language: 'fortran')
+    add_project_arguments('-march=core-avx2 -unroll-aggressive -qopt-prefetch'.split(), language: 'fortran')
   endif
 else
   warning('Unknown Fortran compiler ("' + fcc.get_id() + '"), no default flags specified')
