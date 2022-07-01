@@ -105,9 +105,14 @@ c$OMP+ collapse(2)
       enddo
 c$OMP end parallel do
 #else
+#ifdef OPT0_OPTIM
 c$OMP PARALLEL DO default(none) PRIVATE(j,
 c$OMP+  l,i,iw,ie,js,jn,isw,jsw,ise,jse,inw,jnw,ine,jne)
 c$OMP+ shared(iu,iv,ip,p,pbmin,ii,jj,isp,ilp,ifp)
+#else
+c$OMP PARALLEL DO PRIVATE(
+c$OMP+  l,i,iw,ie,js,jn,isw,jsw,ise,jse,inw,jnw,ine,jne)
+#endif
       do j=-1,jj+2
         do l=1,isp(j)
         do i=max(-1,ifp(j,l)),min(ii+2,ilp(j,l))
@@ -147,6 +152,7 @@ c$OMP END PARALLEL DO
 #endif
 c
       if     (rmpmth.eq.'eitvel') then
+#ifdef OPT0_OPTIM
 c$OMP  PARALLEL DO default(none) PRIVATE(km,kn,j,l,i,k)
 c$OMP+ FIRSTPRIVATE(utotm,vtotm)
 c$OMP+ shared(isu,ifu,ilu,u,ubflxs_p,ii,mm,nn,jj,dlt,pbu)
@@ -156,6 +162,10 @@ c$OMP+ shared(pbmin,p,uflx,vflx,utflx,vtflx,usflx,vsflx)
 c$OMP+ shared(temp,saln,dp,m,n)
 #ifdef TRC
 c$OMP+ shared(trc)
+#endif
+#else
+c$OMP PARALLEL DO PRIVATE(km,kn,j,l,i)
+c$OMP+FIRSTPRIVATE(utotm,vtotm)
 #endif
         do k=1,kk
           km=k+mm
